@@ -1,5 +1,6 @@
 ﻿using LixiBanff.Domain.IServices;
 using LixiBanff.Domain.Models;
+using LixiBanff.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,7 +18,7 @@ namespace LixiBanff.Controllers
             _usuarioService = usuarioService;
         }
 
-        public async Task<IActionResult> Post([FromBody] Usuario usuario)
+        private async Task<IActionResult> Post([FromBody] Usuario usuario)
         {
             try
             {
@@ -26,6 +27,7 @@ namespace LixiBanff.Controllers
                 {
                     return BadRequest(new { message = "El usuario " + usuario.NombreUsuario + " ya existe." });
                 }
+                
                 await _usuarioService.SaveUser(usuario);
                 return Ok(new { message = "Usuario registrado con éxito" });
             }

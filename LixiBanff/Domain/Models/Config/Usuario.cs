@@ -18,6 +18,8 @@ namespace LixiBanff.Domain.Models
         public string CorreoUsuario { get; set; }
         public string TelefonoUsuario { get; set; }      
         public string DescripcionUsuario { get; set; }
+        public bool isSuperAdmin { get; set; }
+        public string PasswordNotEncripted { get; set; }
 
         // FK 
         [Required]

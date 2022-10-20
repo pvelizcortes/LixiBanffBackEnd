@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
 
 namespace LixiBanff
 {
@@ -31,17 +32,28 @@ namespace LixiBanff
             #region Config
             services.AddDbContext<AplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Conexion")));
             services.AddControllers();
-            #endregion
+            #endregion            
 
             #region Add Here Repositories
             // Add Repositories Here
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<ILoginRepository, LoginRepository>();
+            services.AddScoped<IClienteRepository, ClienteRepository>();
             #endregion
 
             #region Add Here Services
             // Add Services Here
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IClienteService, ClienteService>();
             #endregion
+
+            // Swagger
+            AddSwagger(services);
+
+            // CORS
+            services.AddCors(options => options.AddPolicy("AllowWebapp",
+                builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +64,12 @@ namespace LixiBanff
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Foo API V1");
+            });
+            app.UseCors("AllowWebapp");
             app.UseRouting();
 
             app.UseAuthorization();
@@ -59,6 +77,27 @@ namespace LixiBanff
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+        }
+
+        private void AddSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                var groupName = "v1";
+
+                options.SwaggerDoc(groupName, new OpenApiInfo
+                {
+                    Title = $"Lixibanff {groupName}",
+                    Version = groupName,
+                    Description = "Lixibanff API",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Lixibanff Company",
+                        Email = string.Empty,
+                        Url = new Uri("https://Lixibanff.cl/"),
+                    }
+                });
             });
         }
     }
