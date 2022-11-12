@@ -8,44 +8,44 @@ using System.Threading.Tasks;
 
 namespace LixiBanff.Persistence.Repositories
 {
-    public class PilaRepository : IPilaRepository
+    public class ClienteRepository : IClienteRepository
     {
         private readonly AplicationDbContext _context;
-        public PilaRepository(AplicationDbContext context)
+        public ClienteRepository(AplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task Create(Pila _obj)
+        public async Task Create(Cliente _obj)
         {
             _obj.CreateDate = System.DateTime.Now;
             _context.Add(_obj);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Save(Pila _obj)
+        public async Task Save(Cliente _obj)
         {
             _context.Entry(_obj).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> ValidateExistence(Pila _obj, string opcion)
+        public async Task<bool> ValidateExistence(Cliente _obj, string opcion)
         {
             var validateExistence = false;
             if (opcion == "id")
             {
-                validateExistence = await _context.Pila.AnyAsync(x => x.PilaId == _obj.PilaId);
+                validateExistence = await _context.Cliente.AnyAsync(x => x.ClienteId == _obj.ClienteId);
             }
             if (opcion == "nombre")
             {
-                validateExistence = await _context.Pila.AnyAsync(x => x.NombrePila == _obj.NombrePila);
+                validateExistence = await _context.Cliente.AnyAsync(x => x.NombreCliente == _obj.NombreCliente);
             }
             return validateExistence;
         }
 
-        public async Task<List<Pila>> GetList()
+        public async Task<List<Cliente>> GetList()
         {
-            var listData = await _context.Pila
+            var listData = await _context.Cliente
                 //.Where(x => x.Active == true)
                 .ToListAsync();
             return listData;
@@ -53,7 +53,7 @@ namespace LixiBanff.Persistence.Repositories
 
         public async Task Delete(int identity_id)
         {
-            var _obj = await _context.Pila.Where(x => x.PilaId == identity_id).FirstOrDefaultAsync();
+            var _obj = await _context.Cliente.Where(x => x.ClienteId == identity_id).FirstOrDefaultAsync();
             _obj.Active = false;
 
             _context.Entry(_obj).State = EntityState.Modified;

@@ -11,11 +11,11 @@ namespace LixiBanff.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class ClienteController : ControllerBase
+    public class PilaController : ControllerBase
     {
-        private readonly IClienteService _service;
-        private string identity = "cliente";
-        public ClienteController(IClienteService service)
+        private readonly IPilaService _service;
+        private string identity = "Pila";
+        public PilaController(IPilaService service)
         {
             _service = service;
         }
@@ -38,14 +38,14 @@ namespace LixiBanff.Controllers
         [Route("Create")]
         [HttpPost]
         
-        public async Task<IActionResult> Create([FromBody] Cliente _obj)
+        public async Task<IActionResult> Create([FromBody] Pila _obj)
         {
             try
             {         
                 var validateExistence = await _service.ValidateExistence(_obj, "nombre");
                 if (validateExistence)
                 {
-                    return BadRequest(new { message = "El " + identity + " " + _obj.NombreCliente + " ya existe." });
+                    return BadRequest(new { message = "El " + identity + " " + _obj.NombrePila + " ya existe." });
                 }
                 await _service.Create(_obj);
                 return Ok(new { message = identity + " creado con éxito" });
@@ -59,7 +59,7 @@ namespace LixiBanff.Controllers
 
         [Route("Save")]
         [HttpPost]        
-        public async Task<IActionResult> Save([FromBody] Cliente _obj)
+        public async Task<IActionResult> Save([FromBody] Pila _obj)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace LixiBanff.Controllers
                     await _service.Save(_obj);
                     return Ok(new { message = identity + " modificado con éxito" });
                 }
-                return BadRequest(new { message = "El " + identity + " " + _obj.NombreCliente + " no existe." });
+                return BadRequest(new { message = "El " + identity + " " + _obj.NombrePila + " no existe." });
             }
             catch (Exception ex)
             {
