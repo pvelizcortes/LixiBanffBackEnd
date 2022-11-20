@@ -1,6 +1,7 @@
 ﻿using LixiBanff.Domain.IRepositories;
 using LixiBanff.Domain.IServices;
 using LixiBanff.Domain.Models;
+using LixiBanff.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -32,6 +33,11 @@ namespace LixiBanff.Services
         public async Task<List<Pano>> GetList(int idCliente)
         {
             return await _repository.GetList(idCliente);
+        }
+
+        public async Task<List<SelectDTO>> GetSelect(int idCliente)
+        {
+            return await _repository.GetSelect(idCliente);
         }
 
         public async Task Delete(int identity_id, int idCliente)

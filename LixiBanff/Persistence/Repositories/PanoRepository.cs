@@ -1,5 +1,6 @@
 ﻿using LixiBanff.Domain.IRepositories;
 using LixiBanff.Domain.Models;
+using LixiBanff.DTO;
 using LixiBanff.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -49,6 +50,19 @@ namespace LixiBanff.Persistence.Repositories
         {
             var listData = await _context.Pano
                 .Where(x => x.ClienteId == idCliente)
+                .ToListAsync();
+            return listData;
+        }
+
+        public async Task<List<SelectDTO>> GetSelect(int idCliente)
+        {
+            var listData = await _context.Pano
+                .Where(x => x.PanoId == idCliente && x.Active == true)
+                .Select(x => new SelectDTO
+                {
+                    id = x.PanoId,
+                    text = x.NombrePano
+                })
                 .ToListAsync();
             return listData;
         }

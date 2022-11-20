@@ -40,6 +40,24 @@ namespace LixiBanff.Controllers
             }
         }
 
+        [Route("GetSelect")]
+        [HttpGet]
+        public async Task<IActionResult> GetSelect()
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var clienteId = JwtConfigurator.GetTokenIdCliente(identity);
+
+                var listResponse = await _service.GetSelect(clienteId);
+                return Ok(listResponse);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [Route("Create")]
         [HttpPost]
 
