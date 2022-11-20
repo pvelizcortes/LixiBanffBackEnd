@@ -25,7 +25,8 @@ namespace LixiBanff.Utils
             var claims = new[]
            {
                 new Claim(JwtRegisteredClaimNames.Sub, userInfo.NombreUsuario),
-                new Claim("idUsuario", userInfo.UsuarioId.ToString())
+                new Claim("idUsuario", userInfo.UsuarioId.ToString()),
+                new Claim("idCliente", userInfo.ClienteId.ToString())
             };
 
             var token = new JwtSecurityToken(
@@ -47,6 +48,22 @@ namespace LixiBanff.Utils
                 foreach (var claim in claims)
                 {
                     if (claim.Type == "idUsuario")
+                    {
+                        return int.Parse(claim.Value);
+                    }
+                }
+            }
+            return 0;
+        }
+
+        public static int GetTokenIdCliente(ClaimsIdentity identity)
+        {
+            if (identity != null)
+            {
+                IEnumerable<Claim> claims = identity.Claims;
+                foreach (var claim in claims)
+                {
+                    if (claim.Type == "idCliente")
                     {
                         return int.Parse(claim.Value);
                     }

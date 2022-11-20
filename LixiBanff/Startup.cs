@@ -42,6 +42,8 @@ namespace LixiBanff
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<ILoginRepository, LoginRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IPilaRepository, PilaRepository>();
+            services.AddScoped<IPanoRepository, PanoRepository>();
             #endregion
 
             #region Add Here Services
@@ -49,6 +51,8 @@ namespace LixiBanff
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IPilaService, PilaService>();
+            services.AddScoped<IPanoService, PanoService>();
             #endregion
 
             // Swagger

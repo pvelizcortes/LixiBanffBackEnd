@@ -6,30 +6,30 @@ using System.Threading.Tasks;
 
 namespace LixiBanff.Services
 {
-    public class PilaService : IPilaService
+    public class ClienteService : IClienteService
     {
-        private readonly IPilaRepository _repository;
-        public PilaService(IPilaRepository repository)
+        private readonly IClienteRepository _repository;
+        public ClienteService(IClienteRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task Create(Pila _obj)
+        public async Task Create(Cliente _obj)
         {          
             await _repository.Create(_obj);
         }
 
-        public async Task Save(Pila _obj)
+        public async Task Save(Cliente _obj)
         {
             await _repository.Save(_obj);
         }
 
-        public async Task<bool> ValidateExistence(Pila _obj, string opcion)
+        public async Task<bool> ValidateExistence(Cliente _obj, string opcion)
         {
             return await _repository.ValidateExistence(_obj, opcion);
         }
 
-        public async Task<List<Pila>> GetList()
+        public async Task<List<Cliente>> GetList()
         {
             return await _repository.GetList();
         }

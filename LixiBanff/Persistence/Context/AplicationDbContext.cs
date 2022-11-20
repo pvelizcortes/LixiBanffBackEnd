@@ -14,6 +14,7 @@ namespace LixiBanff.Persistence.Context
         public DbSet<Pano> Pano { get; set; }
         public DbSet<TipoNodo> TipoNodo { get; set; }
         public DbSet<Nodo> Nodo { get; set; }
+        public DbSet<Sensor> Sensor { get; set; }
         // End 
         #endregion
 

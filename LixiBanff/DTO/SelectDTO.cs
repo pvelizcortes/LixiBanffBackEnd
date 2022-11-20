@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace LixiBanff.DTO
 {
-    public class SelectDTO
+    public class CambiarPasswordDTO
     {
-        public int id { get; set; }
-        public string text { get; set; }
+        public string passwordAnterior { get; set; }
+        public string nuevaPassword { get; set; }
     }
 }

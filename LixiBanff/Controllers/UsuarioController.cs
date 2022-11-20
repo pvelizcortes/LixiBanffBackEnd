@@ -18,7 +18,9 @@ namespace LixiBanff.Controllers
             _usuarioService = usuarioService;
         }
 
-        private async Task<IActionResult> Post([FromBody] Usuario usuario)
+        [Route("Create")]
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Usuario usuario)
         {
             try
             {
