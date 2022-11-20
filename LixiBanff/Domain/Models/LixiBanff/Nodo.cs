@@ -17,7 +17,11 @@ namespace LixiBanff.Domain.Models
 
         // FK       
         public int? PanoId { get; set; }
-        public Pano Pano { get; set; }       
+        public Pano Pano { get; set; }
+
+        public int? PilaId { get; set; }
+        public Pila Pila { get; set; }
+
         public int TipoNodoId { get; set; }
         public TipoNodo TipoNodo { get; set; }
 
