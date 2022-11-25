@@ -42,7 +42,7 @@ namespace LixiBanff.Services
 
         public async Task<List<SelectDTO>> GetTipoNodoSelect(int idCliente)
         {
-            return await _repository.GetSelect(idCliente);
+            return await _repository.GetTipoNodoSelect(idCliente);
         }
 
         public async Task Delete(int identity_id, int idCliente)

@@ -35,6 +35,21 @@ namespace LixiBanff.Controllers
             }
         }
 
+        [Route("GetSelect")]
+        [HttpGet]
+        public async Task<IActionResult> GetSelect()
+        {
+            try
+            {
+                var listResponse = await _service.GetSelect();
+                return Ok(listResponse);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [Route("Create")]
         [HttpPost]
         

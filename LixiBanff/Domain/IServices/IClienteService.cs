@@ -1,4 +1,5 @@
 ﻿using LixiBanff.Domain.Models;
+using LixiBanff.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,5 +12,6 @@ namespace LixiBanff.Domain.IServices
         Task<bool> ValidateExistence(Cliente _obj, string opcion);
         Task<List<Cliente>> GetList();
         Task Delete(int identity_id);
+        Task<List<SelectDTO>> GetSelect();
     }
 }
