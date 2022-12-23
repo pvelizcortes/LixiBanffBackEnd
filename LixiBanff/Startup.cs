@@ -19,6 +19,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2;
+using Amazon.Runtime;
 
 namespace LixiBanff
 {
@@ -63,7 +66,7 @@ namespace LixiBanff
             // CORS
             services.AddCors(options => options.AddPolicy("AllowWebapp",
                 builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-           
+
             // Add Authentication
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
@@ -78,6 +81,17 @@ namespace LixiBanff
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
                             ClockSkew = TimeSpan.Zero
                         });
+
+            // DynamoDB
+            var credentials = new BasicAWSCredentials("AKIAUQCGKHP7RZVMJOFK", "+yxYZVEZKnJvGXUV19wNjRv9mB0v8YygRXzFEzPy");
+            var config = new AmazonDynamoDBConfig()
+            {
+                RegionEndpoint = Amazon.RegionEndpoint.USEast1
+            };
+            var clientDynamo = new AmazonDynamoDBClient(credentials, config);
+
+            services.AddSingleton<IAmazonDynamoDB>(clientDynamo);
+            services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

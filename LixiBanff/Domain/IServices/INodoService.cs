@@ -11,8 +11,9 @@ namespace LixiBanff.Domain.IServices
         Task Save(Nodo _obj);
         Task<bool> ValidateExistence(Nodo _obj, string opcion);
         Task<List<Nodo>> GetList(int idCliente);
-        Task<List<SelectDTO>> GetSelect(int idCliente);
+        Task<List<SelectDTO>> GetSelect(int idCliente, int panoId);
         Task<List<SelectDTO>> GetTipoNodoSelect(int idCliente);
         Task Delete(int identity_id, int idCliente);
+        Task<Nodo> GetById(int nodoId);
     }
 }

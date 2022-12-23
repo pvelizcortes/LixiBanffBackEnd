@@ -35,9 +35,9 @@ namespace LixiBanff.Services
             return await _repository.GetList(idCliente);
         }
 
-        public async Task<List<SelectDTO>> GetSelect(int idCliente)
+        public async Task<List<SelectDTO>> GetSelect(int idCliente, int panoId)
         {
-            return await _repository.GetSelect(idCliente);
+            return await _repository.GetSelect(idCliente, panoId);
         }
 
         public async Task<List<SelectDTO>> GetTipoNodoSelect(int idCliente)
@@ -49,5 +49,11 @@ namespace LixiBanff.Services
         {
             await _repository.Delete(identity_id, idCliente);
         }
+
+        public async Task<Nodo> GetById(int nodoId)
+        {
+            return await _repository.GetById(nodoId);
+        }
+
     }
 }

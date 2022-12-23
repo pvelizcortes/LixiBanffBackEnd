@@ -15,12 +15,13 @@ namespace LixiBanff.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class NodoController : ControllerBase
     {
-        private readonly INodoService _service;
+        private readonly INodoService _service;    
         private string identity_name = "Nodo";
+
         public NodoController(INodoService service)
-        {
+        {           
             _service = service;
-        }
+        }        
 
         [Route("GetList")]
         [HttpGet]
@@ -42,14 +43,14 @@ namespace LixiBanff.Controllers
 
         [Route("GetSelect")]
         [HttpGet]
-        public async Task<IActionResult> GetSelect()
+        public async Task<IActionResult> GetSelect(int panoId)
         {
             try
             {
                 var identity = HttpContext.User.Identity as ClaimsIdentity;
                 var clienteId = JwtConfigurator.GetTokenIdCliente(identity);
 
-                var listResponse = await _service.GetSelect(clienteId);
+                var listResponse = await _service.GetSelect(clienteId, panoId);
                 return Ok(listResponse);
             }
             catch (Exception ex)

@@ -54,10 +54,13 @@ namespace LixiBanff.Persistence.Repositories
             return listData;
         }
 
-        public async Task<List<SelectDTO>> GetSelect(int idCliente)
+        public async Task<List<SelectDTO>> GetSelect(int idCliente, int panoId)
         {
             var listData = await _context.Nodo
-                .Where(x => x.NodoId == idCliente && x.Active == true)
+                .Where(x =>
+                    x.ClienteId == idCliente &&
+                    (panoId > 0 ? x.PanoId == panoId : x.PanoId > 0) // Filter by Pila
+                    && x.Active == true)
                 .Select(x => new SelectDTO
                 {
                     id = x.NodoId,
@@ -90,6 +93,11 @@ namespace LixiBanff.Persistence.Repositories
                 })
                 .ToListAsync();
             return listData;
+        }
+
+        public async Task<Nodo> GetById(int nodoId)
+        {
+            return await _context.Nodo.Where(x => x.NodoId == nodoId).FirstOrDefaultAsync();
         }
     }
 }
